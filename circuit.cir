@@ -1,7 +1,7 @@
 * Simple RC circuit
 V1 in 0 PULSE(0 5 0 1n 1n 10n 20n)
 R1 in out 1k
-C1 out 0 2u
+C1 out 0 1u
 .tran 0.1n 100n
 .control
   set filetype=ascii
