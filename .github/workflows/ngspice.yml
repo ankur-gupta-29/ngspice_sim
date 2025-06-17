@@ -16,6 +16,10 @@ jobs:
   simulate:
     runs-on: ubuntu-latest
 
+    permissions:
+      actions: write
+      contents: read
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -39,3 +43,4 @@ jobs:
           output.raw
           plot.png
           sim.log
+        if-no-files-found: error
