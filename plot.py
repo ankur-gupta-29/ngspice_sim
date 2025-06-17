@@ -1,33 +1,40 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import re
 
-# Read file manually
 time = []
 voltage = []
+
+unit_multipliers = {'p':1e-12, 'n':1e-9, 'u':1e-6, 'm':1e-3}
 
 with open('output.csv', 'r') as f:
     next(f)  # skip header
     for line in f:
-        if line.strip() == '':
+        # Remove leading/trailing spaces
+        line = line.strip()
+        if not line:
             continue  # skip empty lines
-        t_str, v_str = line.split()
-        
-        # Convert time string to float (handle units like 'n', 'u')
-        unit_multipliers = {'p':1e-12, 'n':1e-9, 'u':1e-6, 'm':1e-3}
-        
-        # time conversion
+
+        # Use regular expression to extract both columns
+        match = re.match(r'(\S+)\s+(\S+)', line)
+        if not match:
+            continue  # skip bad lines
+
+        t_str, v_str = match.groups()
+
+        # Convert time string to float (handle suffixes)
         for suffix, factor in unit_multipliers.items():
             if t_str.endswith(suffix):
-                t = float(t_str.replace(suffix, '')) * factor
+                t = float(t_str[:-len(suffix)]) * factor
                 break
         else:
             t = float(t_str)
-        
+
         v = float(v_str)
+
         time.append(t)
         voltage.append(v)
 
-# Convert to numpy arrays
 time = np.array(time)
 voltage = np.array(voltage)
 
