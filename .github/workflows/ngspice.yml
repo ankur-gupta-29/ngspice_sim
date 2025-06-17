@@ -18,7 +18,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Install ngspice and python packages
       run: |
@@ -31,7 +31,7 @@ jobs:
         ./run_sim.sh
 
     - name: Upload simulation artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: simulation-results
         path: |
